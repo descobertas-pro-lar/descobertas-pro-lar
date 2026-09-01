@@ -11,7 +11,7 @@
 
   <circle cx="256" cy="256" r="248" fill="url(#bg)" stroke="#FF7A3D" stroke-width="16"/>
 
-  <g filter="url(#soft-shadow)">
+  <g filter="url(#soft-shadow)" transform="translate(256 256) scale(1.2) translate(-256 -256)">
     <!-- shopping bag -->
     <path d="M180 210
              L332 210
