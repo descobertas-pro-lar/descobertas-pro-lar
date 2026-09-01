@@ -10,7 +10,7 @@
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(160deg, #FFF3E6 0%, #FFE0C2 40%, #FFB347 100%);
+    background: linear-gradient(160deg, #F4F8FC 0%, #DCE9F5 40%, #5B9BD5 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -41,7 +41,7 @@
     width: clamp(80px, 14vw, 110px);
     height: clamp(80px, 14vw, 110px);
     border-radius: 50%;
-    box-shadow: 0 8px 24px rgba(255, 122, 61, 0.35);
+    box-shadow: 0 8px 24px rgba(46, 93, 138, 0.35);
     margin-bottom: 14px;
     border: 4px solid #fff;
   }
@@ -49,13 +49,13 @@
   h1 {
     font-size: clamp(17px, 2.4vw, 23px);
     font-weight: 700;
-    color: #7A3B12;
+    color: #1E3A54;
     margin-bottom: 4px;
   }
 
   .bio {
     font-size: clamp(12px, 1.6vw, 15px);
-    color: #A5622C;
+    color: #4A7295;
     text-align: center;
     margin-bottom: 6px;
     line-height: 1.5;
@@ -63,7 +63,7 @@
 
   .updated {
     font-size: 11px;
-    color: #C98A4E;
+    color: #6E93B8;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -90,8 +90,8 @@
     background: #fff;
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 6px 20px rgba(122, 59, 18, 0.15);
-    border: 1px solid rgba(255, 122, 61, 0.15);
+    box-shadow: 0 6px 20px rgba(30, 58, 84, 0.15);
+    border: 1px solid rgba(46, 93, 138, 0.15);
     margin-bottom: 16px;
   }
 
@@ -100,9 +100,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 6px;
-    font-size: 15px;
+    font-size: clamp(17px, 2.2vw, 21px);
     font-weight: 700;
-    color: #7A3B12;
+    color: #FF7A3D;
     margin-bottom: 14px;
   }
 
@@ -113,8 +113,8 @@
   }
 
   .weekly-share-btn {
-    background: #FFF3E6;
-    border: 1px solid rgba(255, 122, 61, 0.25);
+    background: #F4F8FC;
+    border: 1px solid rgba(46, 93, 138, 0.25);
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -126,7 +126,7 @@
   }
 
   .weekly-share-btn:active {
-    background: #FFE0C2;
+    background: #DCE9F5;
   }
 
   .weekly-share-btn svg { width: 14px; height: 14px; }
@@ -155,9 +155,9 @@
     flex-shrink: 0;
     font-size: 11.5px;
     font-weight: 600;
-    color: #A5622C;
-    background: #FFF3E6;
-    border: 1px solid rgba(255, 122, 61, 0.2);
+    color: #4A7295;
+    background: #F4F8FC;
+    border: 1px solid rgba(46, 93, 138, 0.2);
     border-radius: 20px;
     padding: 6px 12px;
     cursor: pointer;
@@ -166,9 +166,9 @@
   }
 
   .tab.active {
-    background: #FF7A3D;
+    background: #2E5D8A;
     color: #fff;
-    border-color: #FF7A3D;
+    border-color: #2E5D8A;
   }
 
   .weekly-grid {
@@ -184,13 +184,13 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    background: #FFF6EC;
+    background: #F4F8FC;
     border-radius: 14px;
     padding: 12px 6px;
     transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid rgba(255, 122, 61, 0.1);
+    border: 1px solid rgba(46, 93, 138, 0.1);
     cursor: pointer;
-    --card-bg: #FFF6EC;
+    --card-bg: #F4F8FC;
     overflow: hidden;
   }
 
@@ -242,7 +242,7 @@
   .deal-name {
     font-size: clamp(10.5px, 1.3vw, 13px);
     font-weight: 600;
-    color: #4A2A0F;
+    color: #1E3A54;
     text-align: center;
     line-height: 1.3;
   }
@@ -256,7 +256,7 @@
 
   .price-old {
     font-size: 9.5px;
-    color: #B08968;
+    color: #6E93B8;
     text-decoration: line-through;
   }
 
@@ -268,7 +268,7 @@
 
   .views {
     font-size: 8.5px;
-    color: #C98A4E;
+    color: #6E93B8;
     margin-top: 3px;
   }
 
@@ -287,7 +287,7 @@
   .section-label {
     font-size: 12px;
     font-weight: 700;
-    color: #A5622C;
+    color: #4A7295;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin: 4px 0 2px 4px;
@@ -302,9 +302,9 @@
     border-radius: 16px;
     padding: 15px 18px;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(122, 59, 18, 0.1);
+    box-shadow: 0 4px 14px rgba(30, 58, 84, 0.1);
     transition: transform 0.15s ease;
-    border: 1px solid rgba(255, 122, 61, 0.12);
+    border: 1px solid rgba(46, 93, 138, 0.12);
   }
 
   .link-card:active {
@@ -323,9 +323,9 @@
   }
 
   .icon-shopee { background: #FFE9DC; }
-  .icon-magalu { background: #FFEBEE; }
+  .icon-magalu { background: #E4EEF8; }
   .icon-lomadee { background: #E8F5E9; }
-  .icon-insta { background: #FCE4EC; }
+  .icon-insta { background: #E4EEF8; }
 
   .link-text {
     display: flex;
@@ -336,12 +336,12 @@
   .link-title {
     font-size: 14.5px;
     font-weight: 600;
-    color: #4A2A0F;
+    color: #1E3A54;
   }
 
   .link-sub {
     font-size: 11.5px;
-    color: #B08968;
+    color: #6E93B8;
     margin-top: 2px;
   }
 
@@ -353,20 +353,20 @@
     padding: 18px;
     margin-top: 20px;
     text-align: center;
-    box-shadow: 0 4px 14px rgba(122, 59, 18, 0.1);
-    border: 1px solid rgba(255, 122, 61, 0.12);
+    box-shadow: 0 4px 14px rgba(30, 58, 84, 0.1);
+    border: 1px solid rgba(46, 93, 138, 0.12);
   }
 
   .newsletter-title {
     font-size: 13.5px;
     font-weight: 700;
-    color: #7A3B12;
+    color: #1E3A54;
     margin-bottom: 4px;
   }
 
   .newsletter-sub {
     font-size: 11.5px;
-    color: #B08968;
+    color: #6E93B8;
     margin-bottom: 12px;
   }
 
@@ -379,13 +379,13 @@
     flex: 1;
     padding: 10px 12px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 122, 61, 0.25);
+    border: 1px solid rgba(46, 93, 138, 0.25);
     font-size: 12.5px;
     outline: none;
   }
 
   .newsletter-btn {
-    background: #FF7A3D;
+    background: #2E5D8A;
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -398,7 +398,7 @@
   footer {
     margin-top: 28px;
     font-size: 12px;
-    color: #B08968;
+    color: #6E93B8;
     text-align: center;
   }
 </style>
@@ -413,9 +413,9 @@
     <!-- Weekly deals card -->
     <div class="weekly-card">
       <div class="weekly-title">
-        <div class="weekly-title-text"><svg class="fire" viewBox="0 0 24 24" width="17" height="17" fill="#FF7A3D" stroke="none"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.5-2-.5-2 2 1 3.5 3.5 3.5 6a7 7 0 1 1-14 0c0-4 2-6 3-8 .5-1 1.5-2 2-3z"/></svg> Top 9 da Semana!</div>
+        <div class="weekly-title-text"><svg class="fire" viewBox="0 0 24 24" width="21" height="21" fill="#FF7A3D" stroke="none"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.5-2-.5-2 2 1 3.5 3.5 3.5 6a7 7 0 1 1-14 0c0-4 2-6 3-8 .5-1 1.5-2 2-3z"/></svg> Top 9 da Semana!</div>
         <button class="weekly-share-btn" onclick="shareTop9()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FF7A3D" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2E5D8A" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </div>
 

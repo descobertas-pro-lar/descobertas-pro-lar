@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6FA88B"/>
+      <stop offset="100%" stop-color="#3E7A5E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+
+  <!-- house roof -->
+  <path d="M256 128 L370 216 L350 216 L350 340 L162 340 L162 216 L142 216 Z"
+        fill="#FBF3E7"/>
+
+  <!-- door -->
+  <rect x="222" y="256" width="40" height="84" rx="6" fill="#3E7A5E"/>
+
+  <!-- window -->
+  <rect x="278" y="256" width="42" height="42" rx="4" fill="#3E7A5E"/>
+  <line x1="299" y1="256" x2="299" y2="298" stroke="#FBF3E7" stroke-width="4"/>
+  <line x1="278" y1="277" x2="320" y2="277" stroke="#FBF3E7" stroke-width="4"/>
+</svg>
