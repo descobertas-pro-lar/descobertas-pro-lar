@@ -20,11 +20,11 @@
              L186 394
              C174 394 165 384 166 372
              Z"
-          fill="#FBF3E7"/>
+          fill="#FF7A3D"/>
 
     <!-- bag handles -->
     <path d="M206 210 L206 178 C206 152 228 132 256 132 C284 132 306 152 306 178 L306 210"
-          fill="none" stroke="#FBF3E7" stroke-width="16" stroke-linecap="round"/>
+          fill="none" stroke="#FF7A3D" stroke-width="16" stroke-linecap="round"/>
 
     <!-- bag fold line -->
     <line x1="180" y1="238" x2="332" y2="238" stroke="#2E5D8A" stroke-width="6" opacity="0.15"/>
