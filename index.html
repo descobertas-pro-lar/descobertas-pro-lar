@@ -165,13 +165,16 @@
     border: 1px solid rgba(255, 122, 61, 0.1);
     cursor: pointer;
     --card-bg: #FFF6EC;
+    overflow: hidden;
   }
 
-  .deal-item:hover {
-    background: #FFEBD9;
-    border-color: rgba(255, 122, 61, 0.5);
-    box-shadow: 0 4px 14px rgba(255, 122, 61, 0.2);
-    --card-bg: #FFEBD9;
+  @media (hover: hover) {
+    .deal-item:hover {
+      background: #FFEBD9;
+      border-color: rgba(255, 122, 61, 0.5);
+      box-shadow: 0 4px 14px rgba(255, 122, 61, 0.2);
+      --card-bg: #FFEBD9;
+    }
   }
 
   .deal-item:active {
@@ -196,9 +199,11 @@
     background: var(--card-bg);
   }
 
-  .deal-item:hover .deal-icon {
-    width: clamp(95px, 12vw, 130px);
-    height: clamp(95px, 12vw, 130px);
+  @media (hover: hover) {
+    .deal-item:hover .deal-icon {
+      width: clamp(95px, 12vw, 130px);
+      height: clamp(95px, 12vw, 130px);
+    }
   }
 
   .deal-icon img {
