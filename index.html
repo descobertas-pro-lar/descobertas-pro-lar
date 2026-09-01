@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>descobertas.pro.lar</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(160deg, #FFF3E6 0%, #FFE0C2 40%, #FFB347 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (min-width: 700px) {
+    .container { max-width: 600px; }
+  }
+
+  @media (min-width: 1000px) {
+    .container { max-width: 720px; }
+  }
+
+  @media (max-width: 380px) {
+    .container { max-width: 100%; }
+  }
+
+  .avatar {
+    width: clamp(80px, 14vw, 110px);
+    height: clamp(80px, 14vw, 110px);
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(255, 122, 61, 0.35);
+    margin-bottom: 14px;
+    border: 4px solid #fff;
+  }
+
+  h1 {
+    font-size: clamp(17px, 2.4vw, 23px);
+    font-weight: 700;
+    color: #7A3B12;
+    margin-bottom: 4px;
+  }
+
+  .bio {
+    font-size: clamp(12px, 1.6vw, 15px);
+    color: #A5622C;
+    text-align: center;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .updated {
+    font-size: 11px;
+    color: #C98A4E;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4CAF50;
+    animation: pulse 1.6s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6); }
+    70% { box-shadow: 0 0 0 6px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+  }
+
+  /* Weekly deals card */
+  .weekly-card {
+    width: 100%;
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(122, 59, 18, 0.15);
+    border: 1px solid rgba(255, 122, 61, 0.15);
+    margin-bottom: 16px;
+  }
+
+  .weekly-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #7A3B12;
+    margin-bottom: 14px;
+  }
+
+  .fire {
+    font-size: 16px;
+    display: inline-block;
+    animation: flicker 1.4s infinite ease-in-out;
+  }
+
+  @keyframes flicker {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.15) rotate(-4deg); }
+  }
+
+  /* Category tabs */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .tab {
+    flex-shrink: 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #A5622C;
+    background: #FFF3E6;
+    border: 1px solid rgba(255, 122, 61, 0.2);
+    border-radius: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .tab.active {
+    background: #FF7A3D;
+    color: #fff;
+    border-color: #FF7A3D;
+  }
+
+  .weekly-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .deal-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: #FFF6EC;
+    border-radius: 14px;
+    padding: 12px 6px;
+    transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(255, 122, 61, 0.1);
+    cursor: pointer;
+    --card-bg: #FFF6EC;
+  }
+
+  .deal-item:hover {
+    background: #FFEBD9;
+    border-color: rgba(255, 122, 61, 0.5);
+    box-shadow: 0 4px 14px rgba(255, 122, 61, 0.2);
+    --card-bg: #FFEBD9;
+  }
+
+  .deal-item:active {
+    transform: scale(0.95);
+  }
+
+  .deal-item.hidden {
+    display: none;
+  }
+
+  .deal-icon {
+    width: clamp(70px, 9vw, 100px);
+    height: clamp(70px, 9vw, 100px);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    overflow: hidden;
+    padding: 6px;
+    transition: width 0.25s ease, height 0.25s ease, background 0.2s ease;
+    background: var(--card-bg);
+  }
+
+  .deal-item:hover .deal-icon {
+    width: clamp(95px, 12vw, 130px);
+    height: clamp(95px, 12vw, 130px);
+  }
+
+  .deal-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .deal-name {
+    font-size: clamp(10.5px, 1.3vw, 13px);
+    font-weight: 600;
+    color: #4A2A0F;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .price-old {
+    font-size: 9.5px;
+    color: #B08968;
+    text-decoration: line-through;
+  }
+
+  .price-new {
+    font-size: clamp(10.5px, 1.3vw, 13px);
+    color: #FF7A3D;
+    font-weight: 700;
+  }
+
+  .views {
+    font-size: 8.5px;
+    color: #C98A4E;
+    margin-top: 3px;
+  }
+
+  .share-btn {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background: rgba(255,255,255,0.95);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    z-index: 2;
+    border: none;
+    cursor: pointer;
+  }
+
+  .share-btn svg { width: 12px; height: 12px; }
+
+  .deal-icon svg { width: 22px; height: 22px; }
+  .link-icon svg { width: 22px; height: 22px; }
+
+  /* Regular link list */
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #A5622C;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 4px 0 2px 4px;
+    align-self: flex-start;
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px 18px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(122, 59, 18, 0.1);
+    transition: transform 0.15s ease;
+    border: 1px solid rgba(255, 122, 61, 0.12);
+  }
+
+  .link-card:active {
+    transform: scale(0.97);
+  }
+
+  .link-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .icon-shopee { background: #FFE9DC; }
+  .icon-magalu { background: #FFEBEE; }
+  .icon-lomadee { background: #E8F5E9; }
+  .icon-insta { background: #FCE4EC; }
+
+  .link-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .link-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #4A2A0F;
+  }
+
+  .link-sub {
+    font-size: 11.5px;
+    color: #B08968;
+    margin-top: 2px;
+  }
+
+  /* Newsletter opt-in */
+  .newsletter {
+    width: 100%;
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(122, 59, 18, 0.1);
+    border: 1px solid rgba(255, 122, 61, 0.12);
+  }
+
+  .newsletter-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #7A3B12;
+    margin-bottom: 4px;
+  }
+
+  .newsletter-sub {
+    font-size: 11.5px;
+    color: #B08968;
+    margin-bottom: 12px;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 8px;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 122, 61, 0.25);
+    font-size: 12.5px;
+    outline: none;
+  }
+
+  .newsletter-btn {
+    background: #FF7A3D;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  footer {
+    margin-top: 28px;
+    font-size: 12px;
+    color: #B08968;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <img class="avatar" src="logo_descobertas.png" alt="descobertas.pro.lar">
+    <h1>descobertas.pro.lar</h1>
+    <p class="bio">🏠 achadinhos que facilitam sua rotina<br>✨ produtos testados, preço bom</p>
+    <div class="updated"><span class="dot"></span> Atualizado hoje</div>
+
+    <!-- Weekly deals card -->
+    <div class="weekly-card">
+      <div class="weekly-title"><svg class="fire" viewBox="0 0 24 24" width="17" height="17" fill="#FF7A3D" stroke="none"><path d="M12 2c1 3-2 4-2 7a4 4 0 0 0 8 0c0-1-.5-2-.5-2 2 1 3.5 3.5 3.5 6a7 7 0 1 1-14 0c0-4 2-6 3-8 .5-1 1.5-2 2-3z"/></svg> Top 9 da Semana!</div>
+
+      <div class="weekly-grid" id="weekly-grid"></div>
+    </div>
+
+    <!-- Remaining links -->
+    <div class="links">
+      <div class="section-label">Mais lojas</div>
+
+      <a class="link-card" href="#" id="link-shopee" target="_blank">
+        <div class="link-icon icon-shopee"><svg viewBox="0 0 24 24" fill="none" stroke="#FF7A3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <div class="link-text">
+          <div class="link-title">Ofertas Shopee</div>
+          <div class="link-sub">Achadinhos pra casa</div>
+        </div>
+      </a>
+
+      <a class="link-card" href="#" id="link-magalu" target="_blank">
+        <div class="link-icon icon-magalu"><svg viewBox="0 0 24 24" fill="none" stroke="#E85D75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9 12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg></div>
+        <div class="link-text">
+          <div class="link-title">Ofertas Magalu</div>
+          <div class="link-sub">Eletros e casa</div>
+        </div>
+      </a>
+
+      <a class="link-card" href="https://www.instagram.com/descobertas.pro.lar/" target="_blank">
+        <div class="link-icon icon-insta"><svg viewBox="0 0 24 24" fill="none" stroke="#D1477A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></div>
+        <div class="link-text">
+          <div class="link-title">Seguir no Instagram</div>
+          <div class="link-sub">@descobertas.pro.lar</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Newsletter opt-in -->
+    <div class="newsletter">
+      <div class="newsletter-title">📬 Achadinhos toda semana</div>
+      <div class="newsletter-sub">Receba as novidades direto no WhatsApp</div>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="tel" placeholder="Seu WhatsApp">
+        <button class="newsletter-btn">Quero!</button>
+      </div>
+    </div>
+
+    <footer>© descobertas.pro.lar</footer>
+  </div>
+
+  <script>
+    // =====================================================================
+    // EDITE SÓ AQUI: 9 produtos da semana.
+    // Campos: name (nome curto), image (URL da foto do produto),
+    // price_old (opcional), price_new, url (link de afiliado real)
+    // =====================================================================
+    const products = [
+      { name: "Porta-Mantimentos Electrolux 6pç", image: "https://a-static.mlcdn.com.br/800x560/jogo-de-porta-mantimentos-hermeticos-retangulares-electrolux-experience-6-pecas/magazineluiza/240962900/02326feb8655caf26f6b904bfb997838.jpg", price_old: "R$169,90", price_new: "R$69,00", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/jogo-de-porta-mantimentos-hermeticos-retangulares-electrolux-experience-6-pecas/p/240962900/ud/poud/" },
+      { name: "Chaleira Elétrica 2L Best",     image: "https://a-static.mlcdn.com.br/800x560/chaleira-eletrica-com-auto-desligamento-automatico-apos-fervura-jarra-inox-best-2-litros-top/malibustorepresentes/bak-110-inox/5e564716fd3c6e1eaa8dd9441a8b4e64.jpeg", price_old: "R$89,99", price_new: "R$44,90", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/chaleira-eletrica-com-auto-desligamento-automatico-apos-fervura-jarra-inox-best-2-litros-top/p/ch4341jc1k/ep/clre/" },
+      { name: "Sanduicheira Grill Itatiaia",   image: "https://a-static.mlcdn.com.br/800x560/sanduicheira-grill-itatiaia-essencial-750w-preto-sdess2003/magazineluiza/240936300/749434bb6e530fd8f8489935e3b4253d.jpg", price_old: "R$141,11", price_new: "R$49,90", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/sanduicheira-grill-itatiaia-essencial-750w-preto-sdess2003/p/240936300/ep/gset/" },
+      { name: "Ventilador de Mesa Britânia",   image: "https://a-static.mlcdn.com.br/800x560/ventilador-de-mesa-britania-bvt301-30cm-6-pas-3-velocidades-preto/magazineluiza/237756400/a7d745fb58d9f82101897170fdaa135f.jpg", price_old: "R$153,08", price_new: "R$109,00", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/ventilador-de-mesa-britania-bvt301-30cm-6-pas-3-velocidades-preto/p/237756400/ar/arvm/" },
+      { name: "Smart TV 43\" Samsung Full HD",  image: "https://a-static.mlcdn.com.br/800x560/smart-tv-43-samsung-full-hd-43f6000f-tizen-hyper-real-2-hdmi/magazineluiza/240144900/261b368d629af5c2e37e70583382c07f.jpg", price_new: "R$1.785,06", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/smart-tv-43-samsung-full-hd-43f6000f-tizen-hyper-real-2-hdmi/p/240144900/et/elit/" },
+      { name: "Potes de Vidro Brinox 7pç",     image: "https://a-static.mlcdn.com.br/800x560/jogo-de-potes-de-vidro-hermetico-brinox-com-tampa-redondo-ekko-7-pecas/magazineluiza/238409400/308151cc5415014839e8ca55908728b3.jpg", price_old: "R$149,00", price_new: "R$82,90", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/jogo-de-potes-de-vidro-hermetico-brinox-com-tampa-redondo-ekko-7-pecas/p/238409400/ud/poud/" },
+      { name: "Porta-Tempero Brinox 10pç",     image: "https://a-static.mlcdn.com.br/800x560/porta-tempero-de-vidro-10-pecas-brinox-lock-stock/magazineluiza/240128700/ad5bd42997fc802543f82673241c26af.jpg", price_old: "R$59,00", price_new: "R$29,90", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/porta-tempero-de-vidro-10-pecas-brinox-lock-stock/p/240128700/ud/port/" },
+      { name: "Aparelho de Jantar 12pç",       image: "https://a-static.mlcdn.com.br/800x560/aparelho-de-jantar-12-pecas-6-pratos-6-copos-225ml-suas-compras-shop/suascomprasshop/cjto12-estkonia/b7b3dc892a276eb884a86b8b020090a2.jpeg", price_new: "R$99,99", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/aparelho-de-jantar-12-pecas-6-pratos-6-copos-225ml-suas-compras-shop/p/jc6jha26d8/ud/apja/" },
+      { name: "Panelas Brinox Ceramic 5pç",    image: "https://a-static.mlcdn.com.br/800x560/jogo-de-panelas-brinox-revestimento-ceramico-preto-5-pecas-carbon-ceramic-life/magazineluiza/237663000/cd83bd35bf4c3a4ec879dea0d22b49a7.jpg", price_old: "R$899,90", price_new: "R$499,90", url: "https://www.magazinevoce.com.br/magazinedescobertaslar/jogo-de-panelas-brinox-revestimento-ceramico-preto-5-pecas-carbon-ceramic-life/p/237663000/ud/cjpn/" },
+    ];
+    // =====================================================================
+
+    const grid = document.getElementById("weekly-grid");
+
+    grid.innerHTML = products.map((p) => {
+      const priceOld = p.price_old
+        ? `<span class="price-old">${p.price_old}</span>`
+        : "";
+      const shareText = encodeURIComponent(`Olha esse achadinho: ${p.name}!`);
+
+      return `
+        <a class="deal-item" href="${p.url}" target="_blank">
+          <button class="share-btn" onclick="event.preventDefault(); event.stopPropagation(); window.open('https://wa.me/?text=${shareText}','_blank')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF7A3D" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <div class="deal-icon">
+            <img src="${p.image}" alt="${p.name}" loading="lazy">
+          </div>
+          <div class="deal-name">${p.name}</div>
+          <div class="price-row">${priceOld}<span class="price-new">${p.price_new}</span></div>
+        </a>
+      `;
+    }).join("");
+  </script>
+</body>
+</html>
