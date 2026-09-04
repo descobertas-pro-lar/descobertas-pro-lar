@@ -1,0 +1,29 @@
+{
+  "name": "descobertas-bio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "magalu:find": "node scripts/find-magalu-products.js",
+    "magalu:api": "node scripts/magalu-api.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/descobertas-pro-lar/descobertas-pro-lar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/descobertas-pro-lar/descobertas-pro-lar/issues"
+  },
+  "homepage": "https://github.com/descobertas-pro-lar/descobertas-pro-lar#readme",
+  "dependencies": {
+    "puppeteer": "^25.9.0"
+  },
+  "allowScripts": {
+    "puppeteer@25.9.0": true
+  }
+}
