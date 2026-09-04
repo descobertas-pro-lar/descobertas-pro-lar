@@ -186,3 +186,73 @@ test('discoverProducts replaces a repeated product family with a different produ
 
   assert.deepEqual(products.map((product) => product.sku), ['pot-1', 'tapete-1']);
 });
+
+test('discoverProducts treats food-container synonyms as the same family', async () => {
+  const pages = {
+    recipientes: productHtml([
+      { sku: 'container-1', name: 'Kit Recipientes Herméticos para Alimentos', price: 39.9, rating: 4.9, reviewCount: 1000 },
+    ]),
+    utilidades: productHtml([
+      { sku: 'container-2', name: 'Conjunto Vasilhas para Mantimentos', price: 34.9, rating: 4.8, reviewCount: 800 },
+      { sku: 'tapete-1', name: 'Tapete Antiderrapante para Cozinha', price: 29.9, rating: 4.6, reviewCount: 500 },
+    ]),
+  };
+  const fetchImpl = async (url) => {
+    const query = decodeURIComponent(new URL(url).pathname.split('/busca/')[1].split('/')[0]);
+    return { ok: true, status: 200, text: async () => pages[query] };
+  };
+
+  const products = await discoverProducts({
+    queries: ['recipientes', 'utilidades'],
+    limit: 2,
+    fetchImpl,
+  });
+
+  assert.deepEqual(products.map((product) => product.sku), ['container-1', 'tapete-1']);
+});
+
+test('discoverProducts does not merge unrelated products with generic opening words', async () => {
+  const pages = {
+    vasos: productHtml([
+      { sku: 'vaso-1', name: 'Conjunto Decorativo para Mesa com Vasos', price: 39.9, rating: 4.8, reviewCount: 500 },
+    ]),
+    retratos: productHtml([
+      { sku: 'retrato-1', name: 'Conjunto Decorativo para Mesa com Porta-Retratos', price: 34.9, rating: 4.7, reviewCount: 400 },
+    ]),
+  };
+  const fetchImpl = async (url) => {
+    const query = decodeURIComponent(new URL(url).pathname.split('/busca/')[1].split('/')[0]);
+    return { ok: true, status: 200, text: async () => pages[query] };
+  };
+
+  const products = await discoverProducts({
+    queries: ['vasos', 'retratos'],
+    limit: 2,
+    fetchImpl,
+  });
+
+  assert.deepEqual(products.map((product) => product.sku), ['vaso-1', 'retrato-1']);
+});
+
+test('discoverProducts does not treat every recipiente or vasilha as food storage', async () => {
+  const pages = {
+    potes: productHtml([
+      { sku: 'food-1', name: 'Kit Potes Herméticos para Alimentos', price: 39.9, rating: 4.8, reviewCount: 500 },
+    ]),
+    jardim: productHtml([
+      { sku: 'plant-1', name: 'Vasilha Decorativa para Plantas e Jardim', price: 34.9, rating: 4.7, reviewCount: 400 },
+    ]),
+  };
+  const fetchImpl = async (url) => {
+    const query = decodeURIComponent(new URL(url).pathname.split('/busca/')[1].split('/')[0]);
+    return { ok: true, status: 200, text: async () => pages[query] };
+  };
+
+  const products = await discoverProducts({
+    queries: ['potes', 'jardim'],
+    limit: 2,
+    fetchImpl,
+  });
+
+  assert.deepEqual(products.map((product) => product.sku), ['food-1', 'plant-1']);
+});

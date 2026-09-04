@@ -24,7 +24,7 @@ The command returns JSON with nine products, including:
 
 Each run creates `media/top9/<timestamp>/` with one folder per product and a `manifest.json`. It downloads every gallery image at 800×800 and uses `yt-dlp` plus FFmpeg for supported videos. Inaccessible files are recorded under `imageErrors` or `videoErrors`, and product-page failures under `media.error`, without aborting the remaining batch.
 
-Selection enforces one item per semantic product family. Different SKUs or titles do not count as diverse when they are functionally the same product type, such as two food-container sets.
+Selection enforces one item per recognized semantic product family. Different SKUs or titles do not count as diverse when they are functionally the same known type, such as `potes` and food-context `recipientes`/`vasilhas` mapping to food containers. Unclassified products are not merged from generic opening words; they require the final name-and-image review described in the skill.
 
 It exits with an error if fewer than nine qualifying products are found.
 
