@@ -25,13 +25,13 @@ test('GET /api/products returns storefront products with explicit filters', asyn
   assert.deepEqual(body.products, [{ sku: 'abc', name: 'Organizador', price: 39.9 }]);
 });
 
-test('GET /api/products rejects a price above the below-R$50 promise', async (t) => {
+test('GET /api/products rejects a price above the below-R$100 promise', async (t) => {
   const server = createAppServer({ discover: async () => [] });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   t.after(() => server.close());
 
   const { port } = server.address();
-  const response = await fetch(`http://127.0.0.1:${port}/api/products?maxPrice=50`);
+  const response = await fetch(`http://127.0.0.1:${port}/api/products?maxPrice=100`);
   assert.equal(response.status, 400);
-  assert.match((await response.json()).error, /49\.99/);
+  assert.match((await response.json()).error, /99\.99/);
 });

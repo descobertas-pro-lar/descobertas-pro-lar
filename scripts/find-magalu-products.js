@@ -9,7 +9,7 @@ async function main() {
   const products = await discoverProducts({
     queries: DEFAULT_QUERIES,
     minPrice: 10,
-    maxPrice: 49.99,
+    maxPrice: 99.99,
     limit: 9,
   });
   const outputDir = path.resolve(

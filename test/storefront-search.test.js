@@ -68,7 +68,7 @@ test('discoverProducts filters, deduplicates and ranks affordable storefront pro
   const pages = {
     potes: productHtml([
       { sku: 'popular', name: 'Potes herméticos', price: 39.9, rating: 4.8, reviewCount: 120 },
-      { sku: 'expensive', name: 'Kit caro', price: 55, rating: 5, reviewCount: 999 },
+      { sku: 'expensive', name: 'Kit caro', price: 150, rating: 5, reviewCount: 999 },
     ]),
     organizador: productHtml([
       { sku: 'popular', name: 'Potes herméticos duplicado', price: 39.9, rating: 4.8, reviewCount: 120 },
@@ -86,7 +86,7 @@ test('discoverProducts filters, deduplicates and ranks affordable storefront pro
     queries: ['potes', 'organizador'],
     limit: 2,
     minPrice: 10,
-    maxPrice: 49.99,
+    maxPrice: 99.99,
     fetchImpl,
   });
 
@@ -142,23 +142,23 @@ test('discoverProducts removes duplicate listings with the same normalized title
   assert.equal(products.length, 1);
 });
 
-test('discoverProducts defaults to a strict below-R$50 ceiling', async () => {
+test('discoverProducts defaults to a strict below-R$100 ceiling', async () => {
   const html = productHtml([
-    { sku: 'edge-50', name: 'Tapete de R$50', price: 50, rating: 5, reviewCount: 1000 },
-    { sku: 'under-50', name: 'Lixeira de R$49,99', price: 49.99, rating: 4.5, reviewCount: 100 },
+    { sku: 'edge-100', name: 'Gadget Cozinha de R$100', price: 100, rating: 5, reviewCount: 1000 },
+    { sku: 'under-100', name: 'Gadget Cozinha de R$99,99', price: 99.99, rating: 4.5, reviewCount: 100 },
   ]);
   const products = await discoverProducts({
     queries: ['casa'],
     limit: 9,
     fetchImpl: async () => ({ ok: true, status: 200, text: async () => html }),
   });
-  assert.deepEqual(products.map((product) => product.sku), ['under-50']);
+  assert.deepEqual(products.map((product) => product.sku), ['under-100']);
 });
 
-test('discoverProducts rejects an explicit price ceiling above R$49,99', async () => {
+test('discoverProducts rejects an explicit price ceiling above R$99,99', async () => {
   await assert.rejects(
-    discoverProducts({ queries: ['casa'], maxPrice: 50, fetchImpl: async () => ({ ok: true }) }),
-    /maxPrice must not exceed 49\.99/,
+    discoverProducts({ queries: ['casa'], maxPrice: 100, fetchImpl: async () => ({ ok: true }) }),
+    /maxPrice must not exceed 99\.99/,
   );
 });
 
@@ -255,4 +255,31 @@ test('discoverProducts does not treat every recipiente or vasilha as food storag
   });
 
   assert.deepEqual(products.map((product) => product.sku), ['food-1', 'plant-1']);
+});
+
+test('discoverProducts excludes boring staples like plain spoons even if cheap and well reviewed', async () => {
+  const html = productHtml([
+    { sku: 'spoon-1', name: 'Colher de Silicone Comum', price: 9.9, rating: 5, reviewCount: 5000 },
+    { sku: 'gadget-1', name: 'Organizador Giratorio Multifuncional para Cozinha', price: 39.9, rating: 4.5, reviewCount: 200 },
+  ]);
+  const products = await discoverProducts({
+    queries: ['casa'],
+    limit: 9,
+    minPrice: 5,
+    fetchImpl: async () => ({ ok: true, status: 200, text: async () => html }),
+  });
+  assert.deepEqual(products.map((product) => product.sku), ['gadget-1']);
+});
+
+test('discoverProducts ranks novelty/gadget-y products above plain-but-well-reviewed ones', async () => {
+  const html = productHtml([
+    { sku: 'plain-1', name: 'Organizador de Pia Simples', price: 29.9, rating: 4.6, reviewCount: 300 },
+    { sku: 'viral-1', name: 'Organizador Giratorio Automatico com LED', price: 34.9, rating: 4.5, reviewCount: 100 },
+  ]);
+  const products = await discoverProducts({
+    queries: ['casa'],
+    limit: 2,
+    fetchImpl: async () => ({ ok: true, status: 200, text: async () => html }),
+  });
+  assert.deepEqual(products.map((product) => product.sku), ['viral-1', 'plain-1']);
 });

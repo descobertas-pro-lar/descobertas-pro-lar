@@ -4,7 +4,7 @@ Local, read-only product discovery for **Gui's affiliate storefront only**:
 
 `https://www.magazinevoce.com.br/magazinedescobertaslar/`
 
-It never converts product links to the generic Magalu domain. Results are filtered to in-stock products between R$10 and R$49.99, deduplicated and diversified across home-related searches.
+It never converts product links to the generic Magalu domain. Results are filtered to in-stock products between R$10 and R$99.99, deduplicated and diversified across home-related searches, with a hard exclusion for boring household staples and a scoring bonus for products likely to get social traction (novelty, gadget-y, visual payoff).
 
 ## Find the current Top 9
 
@@ -42,14 +42,14 @@ Default endpoint:
 Example:
 
 ```bash
-curl 'http://127.0.0.1:4177/api/products?limit=9&maxPrice=49.99&queries=potes,organizador%20cozinha,organizador%20banheiro'
+curl 'http://127.0.0.1:4177/api/products?limit=9&maxPrice=99.99&queries=gadget%20cozinha,organizador%20cozinha%20criativo,gadget%20casa'
 ```
 
 Parameters:
 
 - `limit`: 1–50, default 9
 - `minPrice`: default 10
-- `maxPrice`: maximum 49.99; higher values are rejected
+- `maxPrice`: maximum 99.99; higher values are rejected
 - `queries`: comma-separated storefront searches
 
 ## Tests
